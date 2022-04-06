@@ -19,6 +19,10 @@ const nextConfig = {
     loader: 'default',
     // minimumCacheTTL: 31536000,
   },
+
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 };
 
 module.exports = nextConfig;
