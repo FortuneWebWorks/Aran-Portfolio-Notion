@@ -1,0 +1,115 @@
+@import url('https://fonts.googleapis.com/css2?family=Spectral&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime&family=Heebo:wght@500&family=Spectral+SC:wght@800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@800&display=swap');
+
+:root {
+  --color-1: #d2d2d2;
+  --color-2: #858585;
+  --color-3: #000000;
+  --color-bg: #121212;
+  --nav-sm-bg: #313030;
+}
+
+@font-face {
+  font-family: Breton;
+  src: url(./fonts/Breton-Regular.woff2) format(woff2);
+}
+@font-face {
+  font-family: Heuristica;
+  src: url(./fonts/Heuristica-Regular.otf) format(otf);
+}
+
+@font-face {
+  font-family: 'Times New Roman';
+  src: url(./fonts/times\ new\ roman.ttf) format(ttf);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: 'Breton';
+  letter-spacing: 2px;
+  background-color: #000 !important;
+  color: #d2d2d2 !important;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+body {
+  height: 100% !important;
+  width: 100% !important;
+}
+
+body > div {
+  height: 100%;
+  width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  /* text-decoration-thickness: 2px; */
+  border-bottom: 2px solid #462121;
+  z-index: 10;
+}
+
+a:hover {
+  opacity: 0.8;
+}
+
+body {
+  transition: all 1s ease-in-out;
+  position: relative;
+  overflow: hidden;
+  /* padding-bottom: 3rem; */
+}
+
+body::-webkit-scrollbar {
+  width: 5px;
+  background-color: #333;
+}
+
+body::-webkit-scrollbar-thumb {
+  width: 5px;
+  background-color: rgb(255, 255, 255);
+}
+
+h1,
+h2,
+h3 {
+  margin-bottom: 5px;
+}
+
+/* #home {
+  display: none;
+  overflow: hidden;
+} */
+
+body.hide-jumper #goToTop {
+  display: none;
+}
+
+.main-container {
+  width: 100%;
+}
+
+.uploaded {
+  direction: ltr !important;
+}
+
+body.crop-state .cutterContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+}

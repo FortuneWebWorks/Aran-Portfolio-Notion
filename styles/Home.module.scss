@@ -1,0 +1,70 @@
+.home {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #000;
+  color: #fff;
+  overflow: hidden;
+}
+
+.home h1 {
+  font-size: 20rem;
+  font-family: 'Times New Roman' !important;
+}
+
+.home p {
+  font-family: 'Courier Prime' !important;
+}
+
+.sub {
+  font-family: 'Times New Roman' !important;
+  font-size: 10rem;
+}
+
+.sub:hover {
+  color: #333;
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .home h1 {
+    font-size: 13rem;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+  }
+
+  .sub {
+    font-size: 7rem;
+    width: 5rem;
+    height: fit-content;
+  }
+}
+
+@media (max-width: 300px) {
+  .home h1 {
+    font-size: 8rem;
+  }
+
+  .sub {
+    width: 3rem;
+    height: fit-content;
+  }
+
+  .home p {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 212px) {
+  .home h1 {
+    font-size: 7rem;
+  }
+
+  .home p {
+    font-size: 7px;
+  }
+}

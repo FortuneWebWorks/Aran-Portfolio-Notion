@@ -1,0 +1,105 @@
+.container {
+  position: relative;
+  margin: auto;
+  width: 80%;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  clear: both;
+  margin-bottom: 5rem;
+}
+
+.container > * {
+  font-family: Spectral, serif !important;
+}
+
+.about {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  transition: all 0.4s ease-in-out;
+  overflow: hidden;
+  // opacity: 0;
+}
+
+.about .image_container {
+  width: fit-content;
+  overflow: hidden;
+  max-width: 40rem;
+  position: relative;
+  z-index: 10;
+}
+
+.about .about_description {
+  width: 100%;
+  height: fit-content;
+  font-size: 1.2rem;
+  line-height: 1.5rem;
+  margin: 0;
+  overflow: hidden;
+  z-index: 10;
+  text-align: left;
+}
+
+.about .about_description * {
+  width: 100%;
+}
+
+.satan {
+  height: 70rem;
+  position: absolute;
+  top: -30px;
+  left: -700px;
+  transition: all 2s ease-out, opacity 0.3s ease-in;
+}
+
+.adriel {
+  height: 70rem;
+  position: absolute;
+  top: -100px;
+  right: -800px;
+  transition: all 2s ease-out, opacity 0.3s ease-in;
+}
+
+.satan.getOut {
+  left: -2000px;
+  opacity: 0;
+}
+
+.adriel.getOut {
+  right: -2000px;
+  opacity: 0;
+}
+
+@media (max-width: 1000px) {
+  .satan,
+  .adriel {
+    display: none;
+  }
+
+  .about {
+    width: 90%;
+  }
+}
+
+@media (max-width: 600px) {
+  .satan,
+  .adriel {
+    display: none;
+  }
+
+  .about {
+    width: 90%;
+    margin-top: 2rem;
+  }
+
+  .about .about_description {
+    width: auto !important;
+  }
+}
