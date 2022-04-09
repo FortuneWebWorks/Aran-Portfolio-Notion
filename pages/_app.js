@@ -1,11 +1,11 @@
 import '../styles/globals.css';
-import Layout from '../components/Layout';
+import CutterProvider from 'context/CutterContext';
 
 function MyApp({ Component, pageProps }) {
   return (
-    <Layout>
+    <CutterProvider>
       <Component {...pageProps} />
-    </Layout>
+    </CutterProvider>
   );
 }
 

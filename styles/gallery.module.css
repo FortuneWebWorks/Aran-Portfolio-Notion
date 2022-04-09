@@ -1,0 +1,249 @@
+.container {
+  margin: auto;
+  width: 60%;
+  margin-bottom: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.4s ease-in-out;
+}
+
+.container img {
+  user-select: none;
+  pointer-events: none;
+}
+
+.container.opened {
+  width: 86%;
+}
+
+.container button {
+  z-index: 10;
+}
+
+.opened {
+  opacity: 1 !important;
+}
+
+.gallery {
+  width: 100%;
+  margin-bottom: 2rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  justify-items: center;
+  align-items: center;
+  grid-column-gap: 10px;
+  transition: all 0.4s ease-in-out;
+  opacity: 0;
+}
+
+.gallery_item {
+  width: 100%;
+  height: auto !important;
+  /* margin: 0 10px; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  opacity: 1;
+  pointer-events: none;
+  transition: opacity 0.4s ease-in-out;
+}
+
+.gallery_item .image_container {
+  height: 90%;
+  width: 90%;
+  pointer-events: auto;
+  overflow: hidden;
+  margin: 0 auto;
+  position: relative;
+}
+
+.gallery_item.displayOn {
+  margin-top: 0 !important;
+}
+
+.gallery_item.displayOn .image_container img {
+  transition: opacity 0.3s;
+  display: block;
+  user-select: none;
+}
+
+.image_container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.9);
+  transition: all 0.5s ease;
+  opacity: 0;
+}
+
+.image_navigate.displayOn .image_container::after {
+  user-select: none;
+  pointer-events: none;
+}
+
+.image_container.hover::after {
+  opacity: 1;
+}
+
+.image_container.hover .title_date {
+  opacity: 1;
+}
+
+.gallery_item .title {
+  margin: 0.2rem 0;
+  font-size: 1rem;
+  font-family: Spectral, serif !important;
+  user-select: none;
+}
+
+.gallery_item .description {
+  display: none;
+  font-family: Heuristica, 'sans-serif' !important;
+}
+
+.date {
+  margin: 0.2rem 0;
+  font-size: 0.7rem;
+  font-family: Heuristica, 'sans-serif' !important;
+  user-select: none;
+}
+
+.title_date {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  opacity: 0;
+  overflow: hidden;
+  transform: translate(-50%, -50%);
+  transition: all 0.5s ease;
+  z-index: 12;
+}
+
+.gallery_item.displayOn .title_date {
+  position: static;
+  transform: (0, 0);
+}
+
+/* turn display back to flex */
+.gallery_item.displayOn {
+  width: 100%;
+  margin-top: 4rem;
+  padding-bottom: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.gallery_item.displayOn .title {
+  font-size: 2.8rem;
+  margin-top: 1.5rem;
+}
+.gallery_item.displayOn .date {
+  font-size: 1rem;
+}
+.gallery_item.displayOn .image_container {
+  width: fit-content;
+  max-width: 40rem;
+}
+.gallery_item.displayOn .description {
+  width: 100%;
+  max-width: 40rem;
+  font-size: 1rem;
+  line-height: 1.3rem;
+  margin-top: 1.5rem;
+  display: block;
+  opacity: 1 !important;
+}
+
+.image_navigate {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+@media (max-width: 1400px) {
+  .gallery {
+    grid-template-columns: repeat(3, 2fr);
+  }
+  .gallery_item {
+    width: 100%;
+  }
+
+  .image_container {
+    width: 100% !important;
+  }
+}
+@media (max-width: 1085px) {
+  .gallery {
+    grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: 30px;
+  }
+
+  .svg {
+    width: 50% !important;
+    margin: 0 !important;
+    margin-top: 3rem !important;
+  }
+}
+@media (max-width: 650px) {
+  .container {
+    width: 100%;
+  }
+
+  .gallery {
+    grid-template-columns: 1fr;
+    margin-top: 3rem;
+    grid-row-gap: 30px;
+    padding: 0 1rem;
+  }
+
+  .gallery_item {
+    width: 100%;
+  }
+
+  .image_container {
+    width: 100% !important;
+  }
+
+  .gallery_item.displayOn {
+    width: 70%;
+  }
+
+  .gallery_item.displayOn .image_container img:hover {
+    opacity: 1;
+  }
+  .gallery_item.displayOn .image_container img {
+    opacity: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .gallery_item.displayOn .description {
+    width: auto;
+  }
+
+  .image_navigate {
+    display: grid;
+    grid-template-areas:
+      'image image'
+      'leftArrow rightArrow';
+    justify-items: center;
+    align-content: center;
+  }
+
+  .image_navigate .image_container {
+    grid-area: image;
+  }
+
+  .svg {
+    margin: 0 !important;
+  }
+}

@@ -1,6 +1,6 @@
-import style from '@/styles/JumpToTop.module.scss';
+import style from '@/styles/JumpToTop.module.css';
 import { useEffect, useRef } from 'react';
-import Icon from '@/svg/pointing_hand_2.svg';
+import Icon from './SVG/pointing_hand_2.svg';
 
 function JumpToTop() {
   const goToTopRef = useRef();

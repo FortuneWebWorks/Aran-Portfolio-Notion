@@ -1,5 +1,4 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+module.exports = {
   reactStrictMode: true,
 
   webpack(config) {
@@ -14,15 +13,12 @@ const nextConfig = {
 
   images: {
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
-    domains: ['localhost'],
+    domains: ['localhost', 's3.us-west-2.amazonaws.com'],
     path: '/_next/image',
     loader: 'default',
-    // minimumCacheTTL: 31536000,
   },
 
   eslint: {
     ignoreDuringBuilds: true,
   },
 };
-
-module.exports = nextConfig;

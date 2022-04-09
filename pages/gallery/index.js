@@ -1,53 +1,113 @@
-import Head from 'next/head';
-import Link from 'next/link';
+import Image from 'next/image';
+import Router, { useRouter } from 'next/router';
+import { useRef, useEffect, useState } from 'react';
 import { getDatabase } from '@/lib/notion';
 import { Text } from './[id].js';
-import styles from './index.module.css';
+import style from '@/styles/gallery.module.css';
+import Layout from '@/components/Layout.js';
 
 export const databaseId = process.env.NOTION_DATABASE_ID;
 
-export default function Home({ posts }) {
+function Gallery({ posts }) {
+  const [close, setClose] = useState(false);
+
+  const imgContainerRef = useRef();
+  const galleryRef = useRef();
+
+  function clickHandler(slug) {
+    let correctUrl = router.pathname.split('/')[1];
+
+    if (document.getElementById(`${correctUrl}`)) {
+      document.getElementById(`${correctUrl}`).style.opacity = '0';
+    }
+
+    galleryRef.current.classList.add(style.opened);
+    router.push(`/gallery/${slug}`);
+  }
+
+  const router = useRouter();
+
+  function onMouseEnter(e) {
+    const target = e.target;
+    target.classList.add(style.hover);
+  }
+
+  function onMouseLeave(e) {
+    const target = e.target;
+    target.classList.remove(style.hover);
+  }
+
+  Router.events.on('routeChangeStart', () => {
+    setClose(true);
+  });
+
   return (
-    <div>
-      <Head>
-        <title>A</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <Layout>
+      <div className={style.container}>
+        <div
+          className={`${style.gallery} ${close && style.fadeout}`}
+          id="gallery"
+          ref={galleryRef}
+        >
+          {posts &&
+            posts.map((item) => {
+              const date = new Date(item.last_edited_time).toLocaleString(
+                'en-US',
+                {
+                  month: 'short',
+                  day: '2-digit',
+                  year: 'numeric',
+                }
+              );
+              const title = item.properties.Name.title;
+              const imageUrl = item.properties.cover.files[0].file.url;
 
-      <main className={styles.container}>
-        <h2 className={styles.heading}>All Posts</h2>
-        <ol className={styles.posts}>
-          {posts.map((post) => {
-            const date = new Date(post.last_edited_time).toLocaleString(
-              'en-US',
-              {
-                month: 'short',
-                day: '2-digit',
-                year: 'numeric',
-              }
-            );
-            return (
-              <li key={post.id} className={styles.post}>
-                <h3 className={styles.postTitle}>
-                  <Link href={`/gallery/${post.id}`}>
-                    <a>
-                      <Text text={post.properties.Name.title} />
-                    </a>
-                  </Link>
-                </h3>
-
-                <p className={styles.postDescription}>{date}</p>
-                <Link href={`/gallery/${post.id}`}>
-                  <a> Read post →</a>
-                </Link>
-              </li>
-            );
-          })}
-        </ol>
-      </main>
-    </div>
+              return (
+                <div
+                  className={style.gallery_item}
+                  key={item.id}
+                  data-key={item.id}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    clickHandler(item.id);
+                  }}
+                  onContextMenu={(e) => e.preventDefault()}
+                >
+                  <div
+                    className={style.image_container}
+                    onMouseEnter={onMouseEnter}
+                    onMouseLeave={onMouseLeave}
+                    ref={imgContainerRef}
+                    style={{
+                      position: 'relative',
+                    }}
+                  >
+                    <Image
+                      src={imageUrl}
+                      alt="img"
+                      layout="intrinsic"
+                      width="300px"
+                      height="200px"
+                      objectFit="contain"
+                      // priority={true}
+                      loading="lazy"
+                    />
+                    <div className={style.title_date}>
+                      <Text text={title} className={style.title} />
+                      {/* <span className={style.date}>{date}</span> */}
+                    </div>
+                  </div>
+                  <p className={style.description}>Hell</p>
+                </div>
+              );
+            })}
+        </div>
+      </div>
+    </Layout>
   );
 }
+
+export default Gallery;
 
 export const getStaticProps = async () => {
   const database = await getDatabase(databaseId);

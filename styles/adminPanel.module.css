@@ -1,0 +1,36 @@
+.container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background-color: #333;
+  color: #fff;
+}
+
+.options {
+  height: 100%;
+  width: 10rem;
+  min-width: 10rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* align-items: center; */
+  gap: 1rem;
+  background-color: #000;
+  text-align: center;
+  font-size: 12px;
+}
+
+.options img {
+  width: 50% !important;
+}
+
+.input input {
+  display: none;
+}
+
+.input label {
+  cursor: pointer;
+}
