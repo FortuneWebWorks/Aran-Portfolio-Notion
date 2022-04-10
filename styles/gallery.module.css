@@ -41,7 +41,6 @@
 
 .gallery_item {
   width: 100%;
-  height: auto !important;
   /* margin: 0 10px; */
   display: flex;
   flex-direction: column;
@@ -150,12 +149,12 @@
   font-size: 1rem;
 }
 .gallery_item.displayOn .image_container {
-  width: fit-content;
+  width: 100%;
   max-width: 40rem;
 }
 .gallery_item.displayOn .description {
   width: 100%;
-  max-width: 40rem;
+  max-width: 30rem;
   font-size: 1rem;
   line-height: 1.3rem;
   margin-top: 1.5rem;

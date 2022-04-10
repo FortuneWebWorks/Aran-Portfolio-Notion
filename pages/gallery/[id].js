@@ -200,8 +200,7 @@ export default function Post({ page, blocks, paths }) {
             className={style.image_container}
             style={{
               position: 'relative',
-              // width: '36rem',
-              // height: '30rem',
+              width: '100%',
             }}
           >
             <Image
