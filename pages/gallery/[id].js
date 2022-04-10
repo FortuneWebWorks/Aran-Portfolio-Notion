@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { getDatabase, getPage, getBlocks } from '@/lib/notion';
 import { databaseId } from './index.js';
-import styles from './post.module.css';
+// import styles from './post.module.css';
 import style from '@/styles/gallery.module.css';
 import Layout from '@/components/Layout.js';
 import Arrow from '@/components/SVG/arrow.svg';
@@ -200,16 +200,18 @@ export default function Post({ page, blocks, paths }) {
             className={style.image_container}
             style={{
               position: 'relative',
-              width: '35rem',
-              height: '24rem',
+              // width: '36rem',
+              // height: '30rem',
             }}
           >
             <Image
               src={page.properties.cover.files[0].file.url}
               alt="img"
-              layout="fill"
+              layout="responsive"
+              width={0}
+              height={0}
               objectFit="contain"
-              loading="lazy"
+              priority
             />
           </div>
 
@@ -236,7 +238,7 @@ export default function Post({ page, blocks, paths }) {
           className={`${style.gallery_item} ${style.displayOn}`}
           style={{ opacity: 0 }}
         >
-          <h1 className={styles.name}>
+          <h1>
             <Text text={page.properties.Name.title} />
           </h1>
         </div>

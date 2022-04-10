@@ -163,6 +163,14 @@
   opacity: 1 !important;
 }
 
+/* .svg {
+  width: 50% !important;
+} */
+
+.gallery_item h1 {
+  user-select: none;
+}
+
 .image_navigate {
   width: 100%;
   display: flex;
