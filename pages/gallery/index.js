@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Router, { useRouter } from 'next/router';
 import { useRef, useEffect, useState } from 'react';
 import { getDatabase } from '@/lib/notion';
-import { Text } from './[id].js';
+import { Text } from '@/components/notionApi';
 import style from '@/styles/gallery.module.css';
 import Layout from '@/components/Layout.js';
 
@@ -51,7 +51,6 @@ function Gallery({ posts }) {
         >
           {posts &&
             posts.map((item) => {
-              console.log(posts);
               const date = new Date(item.last_edited_time).toLocaleString(
                 'en-US',
                 {
@@ -86,12 +85,11 @@ function Gallery({ posts }) {
                     <Image
                       src={imageUrl}
                       alt="img"
-                      layout="intrinsic"
+                      layout="responsive"
                       width="300px"
-                      height="200px"
-                      objectFit="contain"
-                      // priority={true}
-                      loading="lazy"
+                      height="300px"
+                      objectFit="cover"
+                      priority
                     />
                     <div className={style.title_date}>
                       <Text text={title} className={style.title} />

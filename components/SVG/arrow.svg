@@ -1,9 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 211.5 236">
-  <g id="Group_1" data-name="Group 1" transform="translate(-835.5 -443.5)">
-    <g id="Polygon_1" data-name="Polygon 1" transform="translate(1035.5 450.5) rotate(90)" fill="#fff" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M 228.050537109375 196.5 L 222 196.5 L 0 196.5 L -6.050531387329102 196.5 L -3.033999919891357 191.2550659179688 L 107.9660034179688 -1.744937539100647 L 111 -7.020281314849854 L 114.0339965820312 -1.744937539100647 L 225.0339965820312 191.2550659179688 L 228.050537109375 196.5 Z" stroke="none"/>
-      <path d="M 111 0 L 0 193 L 222 193 L 111 0 M 111 -7 C 113.5050354003906 -7 115.8191070556641 -5.661392211914062 117.068000793457 -3.489898681640625 L 228.0679931640625 189.5101013183594 C 229.3137817382812 191.6761779785156 229.3104705810547 194.3421020507812 228.0592498779297 196.5050354003906 C 226.8080749511719 198.6679992675781 224.498779296875 200 222 200 L 0 200 C -2.498779296875 200 -4.808074951171875 198.6679992675781 -6.059249877929688 196.5050354003906 C -7.310470581054688 194.3421020507812 -7.31378173828125 191.6761779785156 -6.0679931640625 189.5101013183594 L 104.931999206543 -3.489898681640625 C 106.1808929443359 -5.661392211914062 108.4949645996094 -7 111 -7 Z" stroke="none" fill="#707070"/>
-    </g>
-    <line id="Line_1" data-name="Line 1" y2="222" transform="translate(1043.5 450.5)" fill="none" stroke="#858585" stroke-linecap="round" stroke-width="7"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="181" height="215" viewBox="0 0 201 235">
+  <g id="Group_1" data-name="Group 1" transform="translate(-738 -54)">
+    <line id="Line_1" data-name="Line 1" y1="228" transform="translate(935.5 57.5)" fill="none" stroke="#181818" stroke-linecap="round" stroke-width="7"/>
+    <path id="Polygon_1" data-name="Polygon 1" d="M112,0,224,194H0Z" transform="translate(935.5 59.5) rotate(90)" fill="none" stroke="#181818" stroke-linecap="round" stroke-linejoin="round" stroke-width="7"/>
   </g>
 </svg>
