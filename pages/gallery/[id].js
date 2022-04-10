@@ -165,7 +165,6 @@ const renderBlock = (block) => {
 };
 
 export default function Post({ page, blocks, paths }) {
-  console.log(paths);
   const router = useRouter();
   const galleryRef = useRef();
   const [positions, setPosition] = useState(() => ({
@@ -306,6 +305,8 @@ export default function Post({ page, blocks, paths }) {
   };
 
   useEffect(() => {
+    window.history.pushState('', '', page.properties.Name.title[0].plain_text);
+
     document
       .querySelector(`.${style.gallery_item}`)
       .classList.add(style.opened);
@@ -407,7 +408,9 @@ export default function Post({ page, blocks, paths }) {
 export const getStaticPaths = async () => {
   const database = await getDatabase(databaseId);
   return {
-    paths: database.map((page) => ({ params: { id: page.id } })),
+    paths: database.map((page) => ({
+      params: { id: page.id },
+    })),
     fallback: true,
   };
 };

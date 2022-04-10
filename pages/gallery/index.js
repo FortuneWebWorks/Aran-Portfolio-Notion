@@ -14,7 +14,7 @@ function Gallery({ posts }) {
   const imgContainerRef = useRef();
   const galleryRef = useRef();
 
-  function clickHandler(slug) {
+  function clickHandler(slug, title) {
     let correctUrl = router.pathname.split('/')[1];
 
     if (document.getElementById(`${correctUrl}`)) {
@@ -22,7 +22,7 @@ function Gallery({ posts }) {
     }
 
     galleryRef.current.classList.add(style.opened);
-    router.push(`/gallery/${slug}`);
+    Router.push(`/gallery/${slug}`);
   }
 
   const router = useRouter();
@@ -42,7 +42,7 @@ function Gallery({ posts }) {
   });
 
   return (
-    <Layout>
+    <Layout title="gallery">
       <div className={style.container}>
         <div
           className={`${style.gallery} ${close && style.fadeout}`}
@@ -51,6 +51,7 @@ function Gallery({ posts }) {
         >
           {posts &&
             posts.map((item) => {
+              console.log(posts);
               const date = new Date(item.last_edited_time).toLocaleString(
                 'en-US',
                 {
@@ -69,7 +70,7 @@ function Gallery({ posts }) {
                   data-key={item.id}
                   onClick={(e) => {
                     e.preventDefault();
-                    clickHandler(item.id);
+                    clickHandler(item.id, title[0].plain_text);
                   }}
                   onContextMenu={(e) => e.preventDefault()}
                 >
