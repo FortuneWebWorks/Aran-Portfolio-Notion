@@ -11,6 +11,7 @@ import { Text, renderNestedList, renderBlock } from '@/components/notionApi';
 
 export default function Post({ page, blocks, paths }) {
   const router = useRouter();
+  const pathName = useRef(router.query.id);
   const galleryRef = useRef();
   const [positions, setPosition] = useState(() => ({
     xDown: null,
@@ -150,28 +151,59 @@ export default function Post({ page, blocks, paths }) {
   };
 
   useEffect(() => {
-    window.history.pushState('', '', page.properties.Name.title[0].plain_text);
+    localStorage.setItem('id', pathName.current);
+    // router.push({
+    //   pathName,
+    //   query: {
+    //     ...query,
+    //     [val]: e.target.checked ? 1 : undefined,
+    //   },
+    // });
+    //   const path = localStorage.getItem('id');
+    //   // Always do navigations after the first render
+    //   router.push(page.properties.Name.title[0].plain_text, undefined, {
+    //     shallow: true,
+    //   });
+    //   router.push(path, undefined, {
+    //     shallow: true,
+    //   });
+    //   window.onbeforeunload = () => {
+    //     localStorage.setItem('id', pathName.current);
+    //   };
+  }, []);
 
-    document
-      .querySelector(`.${style.gallery_item}`)
-      .classList.add(style.opened);
+  // useEffect(() => {
+  //   // if (!page) {
+  //   //   const route = localStorage.getItem('id');
+  //   //   router.push(route);
+  //   //   return;
+  //   // }
+  //   // window.history.pushState({}, '', page.properties.Name.title[0].plain_text);
 
-    galleryRef.current.classList.add(style.opened);
-    document.body.classList.add('hide-jumper');
+  //   // window.onbeforeunload = () => {
+  //   //   router.push('/gallery/' + pathName.current);
+  //   // };
 
-    window.addEventListener('keydown', navigateWithKeys);
-    window.addEventListener('touchstart', navigateWithSwipeStart);
-    window.addEventListener('touchmove', navigateWithSwipeMove);
-    window.addEventListener('touchend', navigateWithSwipeEnd);
+  //   document
+  //     .querySelector(`.${style.gallery_item}`)
+  //     .classList.add(style.opened);
 
-    return () => {
-      document.body.classList.remove('hide-jumper');
-      window.removeEventListener('keydown', navigateWithKeys);
-      window.removeEventListener('touchstart', navigateWithSwipeStart);
-      window.removeEventListener('touchmove', navigateWithSwipeMove);
-      window.removeEventListener('touchend', navigateWithSwipeEnd);
-    };
-  });
+  //   galleryRef.current.classList.add(style.opened);
+  //   document.body.classList.add('hide-jumper');
+
+  //   window.addEventListener('keydown', navigateWithKeys);
+  //   window.addEventListener('touchstart', navigateWithSwipeStart);
+  //   window.addEventListener('touchmove', navigateWithSwipeMove);
+  //   window.addEventListener('touchend', navigateWithSwipeEnd);
+
+  //   return () => {
+  //     document.body.classList.remove('hide-jumper');
+  //     window.removeEventListener('keydown', navigateWithKeys);
+  //     window.removeEventListener('touchstart', navigateWithSwipeStart);
+  //     window.removeEventListener('touchmove', navigateWithSwipeMove);
+  //     window.removeEventListener('touchend', navigateWithSwipeEnd);
+  //   };
+  // }, []);
 
   if (!page || !blocks) {
     return <div />;
@@ -200,7 +232,7 @@ export default function Post({ page, blocks, paths }) {
             className={style.image_container}
             style={{
               position: 'relative',
-              width: '60%',
+              width: '40%',
             }}
           >
             <Image
@@ -247,6 +279,7 @@ export default function Post({ page, blocks, paths }) {
 }
 
 export const getStaticPaths = async () => {
+  console.log(localSorage.getItem('id'));
   const database = await getDatabase(databaseId);
   return {
     paths: database.map((page) => ({
@@ -257,6 +290,7 @@ export const getStaticPaths = async () => {
 };
 
 export const getStaticProps = async (paths) => {
+  const database = await getDatabase(databaseId);
   const { id } = paths.params;
   const page = await getPage(id);
   const blocks = await getBlocks(id);
@@ -280,8 +314,6 @@ export const getStaticProps = async (paths) => {
     }
     return block;
   });
-
-  const database = await getDatabase(databaseId);
 
   return {
     props: {

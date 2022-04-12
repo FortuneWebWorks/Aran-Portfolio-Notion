@@ -149,7 +149,7 @@
   font-size: 1rem;
 }
 .gallery_item.displayOn .image_container {
-  width: 100%;
+  width: 40%;
   max-width: 40rem;
 }
 .gallery_item.displayOn .description {
