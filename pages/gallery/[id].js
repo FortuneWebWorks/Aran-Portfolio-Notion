@@ -247,10 +247,11 @@ export default function Post({ page, blocks, paths }) {
 
 export const getStaticPaths = async () => {
   const database = await getDatabase(databaseId);
+
   return {
-    paths: database.map((page) => ({
-      params: { id: page.id },
-    })),
+    paths: database.map((item) => {
+      return { params: { id: item.id } };
+    }),
     fallback: true,
   };
 };
@@ -258,9 +259,9 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async (paths) => {
   const database = await getDatabase(databaseId);
   const { id } = paths.params;
+
   const page = await getPage(id);
   const blocks = await getBlocks(id);
-
   const childBlocks = await Promise.all(
     blocks
       .filter((block) => block.has_children)
@@ -271,7 +272,7 @@ export const getStaticProps = async (paths) => {
         };
       })
   );
-  const blocksWithChildren = blocks.map((block) => {
+  const blocksWithChildren = await blocks.map((block) => {
     // Add child blocks if the block should contain children but none exists
     if (block.has_children && !block[block.type].children) {
       block[block.type]['children'] = childBlocks.find(
@@ -287,6 +288,6 @@ export const getStaticProps = async (paths) => {
       blocks: blocksWithChildren,
       paths: database,
     },
-    revalidate: 1,
+    revalidate: 60,
   };
 };
