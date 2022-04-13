@@ -8,7 +8,6 @@ import { getPage, getBlocks } from '@/lib/notion';
 import { renderBlock } from '@/components/notionApi';
 
 function About({ data, blocks }, { opac }) {
-  console.log(data);
   return (
     <Layout title={'About'}>
       <div className={style.container}>

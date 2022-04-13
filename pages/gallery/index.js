@@ -22,7 +22,7 @@ function Gallery({ posts }) {
     }
 
     galleryRef.current.classList.add(style.opened);
-    Router.push(`/gallery/${slug}`);
+    Router.push(`/gallery/${title}`);
   }
 
   const router = useRouter();

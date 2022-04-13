@@ -1,7 +1,7 @@
 import { Fragment, useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { getDatabase, getPage, getBlocks } from '@/lib/notion';
+import { getDatabase, getPage, getBlocks, getPageWithSlug } from '@/lib/notion';
 import { databaseId } from './index.js';
 // import styles from './post.module.css';
 import style from '@/styles/gallery.module.css';
@@ -11,7 +11,6 @@ import { Text, renderNestedList, renderBlock } from '@/components/notionApi';
 
 export default function Post({ page, blocks, paths }) {
   const router = useRouter();
-  const pathName = useRef(router.query.id);
   const galleryRef = useRef();
   const [positions, setPosition] = useState(() => ({
     xDown: null,
@@ -26,16 +25,20 @@ export default function Post({ page, blocks, paths }) {
     window.removeEventListener('touchmove', navigateWithSwipeMove);
     window.removeEventListener('touchend', navigateWithSwipeEnd);
 
-    const { id } = router.query;
+    const { title } = router.query;
     let getNextPath = null;
 
     if (arrow === 'previous') {
       getNextPath = paths.map((item, index) =>
-        paths[index - 1] && item.id === id ? paths[index - 1].id || '' : ''
+        paths[index - 1] && item.properties.Name.title[0].plain_text === title
+          ? paths[index - 1].properties.Name.title[0].plain_text || ''
+          : ''
       );
     } else {
       getNextPath = paths.map((item, index) =>
-        paths[index + 1] && item.id === id ? paths[index + 1].id || '' : ''
+        paths[index + 1] && item.properties.Name.title[0].plain_text === title
+          ? paths[index + 1].properties.Name.title[0].plain_text || ''
+          : ''
       );
     }
 
@@ -52,18 +55,22 @@ export default function Post({ page, blocks, paths }) {
 
   const navigateWithKeys = (e) => {
     if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
-      const { id } = router.query;
+      const { title } = router.query;
       let getNextPath = null;
 
       if (e.key === 'ArrowLeft') {
         getNextPath = paths.map((item, index) =>
-          paths[index - 1] && item.id === id ? paths[index - 1].id || '' : ''
+          paths[index - 1] && item.properties.Name.title[0].plain_text === title
+            ? paths[index - 1].properties.Name.title[0].plain_text || ''
+            : ''
         );
       }
 
       if (e.key === 'ArrowRight') {
         getNextPath = paths.map((item, index) =>
-          paths[index + 1] && item.id === id ? paths[index + 1].id || '' : ''
+          paths[index + 1] && item.properties.Name.title[0].plain_text === title
+            ? paths[index + 1].properties.Name.title[0].plain_text || ''
+            : ''
         );
       }
 
@@ -122,17 +129,21 @@ export default function Post({ page, blocks, paths }) {
   const navigateWithSwipeEnd = (e) => {
     if (direction.current === 'left' || direction.current === 'right') {
       let getNextPath = null;
-      const { id } = router.query;
+      const { title } = router.query;
 
       if (direction.current === 'left') {
         getNextPath = paths.map((item, index) =>
-          paths[index + 1] && item.id === id ? paths[index + 1].id || '' : ''
+          paths[index + 1] && item.properties.Name.title[0].plain_text === title
+            ? paths[index + 1].properties.Name.title[0].plain_text || ''
+            : ''
         );
       }
 
       if (direction.current === 'right') {
         getNextPath = paths.map((item, index) =>
-          paths[index - 1] && item.id === id ? paths[index - 1].id || '' : ''
+          paths[index - 1] && item.properties.Name.title[0].plain_text === title
+            ? paths[index - 1].properties.Name.title[0].plain_text || ''
+            : ''
         );
       }
 
@@ -249,8 +260,8 @@ export const getStaticPaths = async () => {
   const database = await getDatabase(databaseId);
 
   return {
-    paths: database.map((item) => {
-      return { params: { id: item.id } };
+    paths: database.map((page) => {
+      return { params: { title: page.properties.Name.title[0].plain_text } };
     }),
     fallback: true,
   };
@@ -258,9 +269,14 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async (paths) => {
   const database = await getDatabase(databaseId);
-  const { id } = paths.params;
+  const { title } = paths.params;
 
-  const page = await getPage(id);
+  const slugyPage = await getPageWithSlug(title);
+
+  const page = await slugyPage[0];
+
+  const id = await page.id;
+
   const blocks = await getBlocks(id);
   const childBlocks = await Promise.all(
     blocks
@@ -273,7 +289,6 @@ export const getStaticProps = async (paths) => {
       })
   );
   const blocksWithChildren = await blocks.map((block) => {
-    // Add child blocks if the block should contain children but none exists
     if (block.has_children && !block[block.type].children) {
       block[block.type]['children'] = childBlocks.find(
         (x) => x.id === block.id
