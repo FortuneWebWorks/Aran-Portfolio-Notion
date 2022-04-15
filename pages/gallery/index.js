@@ -9,6 +9,7 @@ import Layout from '@/components/Layout.js';
 export const databaseId = process.env.NOTION_DATABASE_ID;
 
 function Gallery({ posts }) {
+  console.log(posts);
   const [close, setClose] = useState(false);
 
   const imgContainerRef = useRef();
@@ -60,7 +61,9 @@ function Gallery({ posts }) {
                 }
               );
               const title = item.properties.Name.title;
-              const imageUrl = item.properties.cover.files[0].file.url;
+              const imageUrl = item.properties.cover.files[0].file
+                ? item.properties.cover.files[0].file.url
+                : item.properties.cover.files[0].external.url;
 
               return (
                 <div

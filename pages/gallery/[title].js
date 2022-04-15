@@ -187,6 +187,10 @@ export default function Post({ page, blocks, paths }) {
     return <div />;
   }
 
+  const imageUrl = page.properties.cover.files[0].file
+    ? page.properties.cover.files[0].file.url
+    : page.properties.cover.files[0].external.url;
+
   return (
     <Layout title={page.properties.Name.title[0].plain_text}>
       <div className={style.container} ref={galleryRef}>
@@ -214,7 +218,7 @@ export default function Post({ page, blocks, paths }) {
             }}
           >
             <Image
-              src={page.properties.cover.files[0].file.url}
+              src={imageUrl}
               alt="img"
               layout="responsive"
               width={0}
