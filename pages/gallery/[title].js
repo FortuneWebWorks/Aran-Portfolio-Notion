@@ -308,6 +308,6 @@ export const getStaticProps = async (paths) => {
       blocks: blocksWithChildren,
       paths: database,
     },
-    revalidate: 60,
+    revalidate: 1,
   };
 };
