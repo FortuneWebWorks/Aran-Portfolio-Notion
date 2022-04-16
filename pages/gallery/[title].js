@@ -187,6 +187,7 @@ export default function Post({ page, blocks, paths }) {
     return <div />;
   }
 
+  // Image
   const imageUrl = page.properties.cover.files[0].file
     ? page.properties.cover.files[0].file.url
     : page.properties.cover.files[0].external.url;
