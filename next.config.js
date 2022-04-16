@@ -19,6 +19,7 @@ module.exports = {
       's3.us-west-2.amazonaws.com',
       'images.unsplash.com',
       'drive.google.com',
+      'lh5.googleusercontent.com',
     ],
     path: '/_next/image',
   },
