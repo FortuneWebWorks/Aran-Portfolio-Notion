@@ -9,7 +9,6 @@ import Layout from '@/components/Layout.js';
 export const databaseId = process.env.NOTION_DATABASE_ID;
 
 function Gallery({ posts }) {
-  console.log(posts);
   const [close, setClose] = useState(false);
 
   const imgContainerRef = useRef();

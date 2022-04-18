@@ -7,10 +7,11 @@ import { databaseId } from './index.js';
 import style from '@/styles/gallery.module.css';
 import Layout from '@/components/Layout.js';
 import Arrow from '@/components/SVG/arrow.svg';
-import { Text, renderNestedList, renderBlock } from '@/components/notionApi';
+import { Text } from '@/components/notionApi';
 
 export default function Post({ page, blocks, paths }) {
   const router = useRouter();
+  const [routerQuery, setRouterQuery] = useState(router.query);
   const galleryRef = useRef();
   const [positions, setPosition] = useState(() => ({
     xDown: null,
@@ -55,7 +56,8 @@ export default function Post({ page, blocks, paths }) {
 
   const navigateWithKeys = (e) => {
     if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
-      const { title } = router.query;
+      const correntUrl = window.location.href.split('/');
+      const title = correntUrl[correntUrl.length - 1];
       let getNextPath = null;
 
       if (e.key === 'ArrowLeft') {
@@ -129,7 +131,8 @@ export default function Post({ page, blocks, paths }) {
   const navigateWithSwipeEnd = (e) => {
     if (direction.current === 'left' || direction.current === 'right') {
       let getNextPath = null;
-      const { title } = router.query;
+      const correntUrl = window.location.href.split('/');
+      const title = correntUrl[correntUrl.length - 1];
 
       if (direction.current === 'left') {
         getNextPath = paths.map((item, index) =>
@@ -169,14 +172,14 @@ export default function Post({ page, blocks, paths }) {
     galleryRef.current.classList.add(style.opened);
     document.body.classList.add('hide-jumper');
 
-    window.addEventListener('keydown', navigateWithKeys);
+    window.addEventListener('keyup', navigateWithKeys);
     window.addEventListener('touchstart', navigateWithSwipeStart);
     window.addEventListener('touchmove', navigateWithSwipeMove);
     window.addEventListener('touchend', navigateWithSwipeEnd);
 
     return () => {
       document.body.classList.remove('hide-jumper');
-      window.removeEventListener('keydown', navigateWithKeys);
+      window.removeEventListener('keyup', navigateWithKeys);
       window.removeEventListener('touchstart', navigateWithSwipeStart);
       window.removeEventListener('touchmove', navigateWithSwipeMove);
       window.removeEventListener('touchend', navigateWithSwipeEnd);
