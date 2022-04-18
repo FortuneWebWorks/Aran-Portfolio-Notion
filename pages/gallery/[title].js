@@ -20,10 +20,6 @@ export default function Post({ page, blocks, paths }) {
   const direction = useRef('');
 
   const navigate = (arrow) => {
-    window.removeEventListener('touchstart', navigateWithSwipeStart);
-    window.removeEventListener('touchmove', navigateWithSwipeMove);
-    window.removeEventListener('touchend', navigateWithSwipeEnd);
-
     const { title } = router.query;
     let getNextPath = null;
 
@@ -165,6 +161,7 @@ export default function Post({ page, blocks, paths }) {
   };
 
   useEffect(() => {
+    const imageSwipe = document.getElementById('image').parentElement;
     document
       .querySelector(`.${style.gallery_item}`)
       .classList.add(style.opened);
@@ -173,16 +170,18 @@ export default function Post({ page, blocks, paths }) {
     document.body.classList.add('hide-jumper');
 
     window.addEventListener('keyup', navigateWithKeys);
-    window.addEventListener('touchstart', navigateWithSwipeStart);
-    window.addEventListener('touchmove', navigateWithSwipeMove);
-    window.addEventListener('touchend', navigateWithSwipeEnd);
+    imageSwipe.addEventListener('touchstart', navigateWithSwipeStart, {
+      passive: false,
+    });
+    imageSwipe.addEventListener('touchmove', navigateWithSwipeMove);
+    imageSwipe.addEventListener('touchend', navigateWithSwipeEnd);
 
     return () => {
       document.body.classList.remove('hide-jumper');
       window.removeEventListener('keyup', navigateWithKeys);
-      window.removeEventListener('touchstart', navigateWithSwipeStart);
-      window.removeEventListener('touchmove', navigateWithSwipeMove);
-      window.removeEventListener('touchend', navigateWithSwipeEnd);
+      imageSwipe.removeEventListener('touchstart', navigateWithSwipeStart);
+      imageSwipe.removeEventListener('touchmove', navigateWithSwipeMove);
+      imageSwipe.removeEventListener('touchend', navigateWithSwipeEnd);
     };
   }, []);
 
@@ -200,7 +199,9 @@ export default function Post({ page, blocks, paths }) {
       <div className={style.container} ref={galleryRef}>
         <div className={`${style.image_navigate} ${style.displayOn}`}>
           <Arrow
-            onClick={() => navigate('previous')}
+            onClick={(e) => {
+              navigate('previous');
+            }}
             id="previous"
             className={style.svg}
             style={{
@@ -229,11 +230,14 @@ export default function Post({ page, blocks, paths }) {
               height={0}
               objectFit="contain"
               priority
+              id="image"
             />
           </div>
 
           <Arrow
-            onClick={() => navigate('next')}
+            onClick={(e) => {
+              navigate('next');
+            }}
             id="next"
             className={style.svg}
             style={{
