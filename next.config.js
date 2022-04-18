@@ -20,6 +20,8 @@ module.exports = {
       'images.unsplash.com',
       'drive.google.com',
       'lh5.googleusercontent.com',
+      'i.postimg.cc',
+      'www.dropbox.com',
     ],
     path: '/_next/image',
   },
