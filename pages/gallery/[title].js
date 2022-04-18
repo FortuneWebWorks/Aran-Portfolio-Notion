@@ -174,6 +174,8 @@ export default function Post({ page, blocks, paths }) {
 
     window.addEventListener('keyup', navigateWithKeys);
     window.addEventListener('touchstart', navigateWithSwipeStart);
+    window.addEventListener('touchmove', navigateWithSwipeMove);
+    window.addEventListener('touchend', navigateWithSwipeEnd);
 
     return () => {
       document.body.classList.remove('hide-jumper');
