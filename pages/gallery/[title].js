@@ -13,13 +13,11 @@ export default function Post({ page, blocks, paths }) {
   const router = useRouter();
   const [routerQuery, setRouterQuery] = useState(router.query);
   const galleryRef = useRef();
-  const [positions, setPosition] = useState(() => ({
+  const positions = useRef({
     xDown: null,
     yDown: null,
-  }));
+  });
   const direction = useRef('');
-
-  const { xDown, yDown } = positions;
 
   const navigate = (arrow) => {
     window.removeEventListener('touchstart', navigateWithSwipeStart);
@@ -91,13 +89,18 @@ export default function Post({ page, blocks, paths }) {
   };
 
   const navigateWithSwipeStart = (e) => {
-    setPosition({
+    positions.current = {
       xDown: e.touches[0].clientX,
       yDown: e.touches[0].clientY,
-    });
+    };
+
+    window.addEventListener('touchmove', navigateWithSwipeMove);
+    window.addEventListener('touchend', navigateWithSwipeEnd);
   };
 
   const navigateWithSwipeMove = (e) => {
+    const { xDown, yDown } = positions.current;
+
     if (!xDown || !yDown) {
       return;
     }
@@ -122,10 +125,10 @@ export default function Post({ page, blocks, paths }) {
       }
     }
     /* reset values */
-    setPosition({
+    positions.current = {
       xDown: xUp,
       yDown: yUp,
-    });
+    };
   };
 
   const navigateWithSwipeEnd = (e) => {
@@ -174,8 +177,6 @@ export default function Post({ page, blocks, paths }) {
 
     window.addEventListener('keyup', navigateWithKeys);
     window.addEventListener('touchstart', navigateWithSwipeStart);
-    window.addEventListener('touchmove', navigateWithSwipeMove);
-    window.addEventListener('touchend', navigateWithSwipeEnd);
 
     return () => {
       document.body.classList.remove('hide-jumper');
