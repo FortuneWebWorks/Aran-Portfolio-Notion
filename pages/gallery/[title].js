@@ -93,9 +93,6 @@ export default function Post({ page, blocks, paths }) {
       xDown: e.touches[0].clientX,
       yDown: e.touches[0].clientY,
     };
-
-    window.addEventListener('touchmove', navigateWithSwipeMove);
-    window.addEventListener('touchend', navigateWithSwipeEnd);
   };
 
   const navigateWithSwipeMove = (e) => {
