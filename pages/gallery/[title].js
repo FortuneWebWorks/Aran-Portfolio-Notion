@@ -212,7 +212,6 @@ export default function Post({ page, blocks, paths }) {
               width: 'fit-content',
               hieght: '100%',
               gridArea: 'leftArrow',
-              userSelect,
             }}
           />
 
